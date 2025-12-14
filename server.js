@@ -84,6 +84,17 @@ app.get("/api/questions/:id/answers", (req, res) => {
   );
 });
 
+app.patch("/api/questions/:id", (req, res) => {
+  const { id } = req.params;
+  const { votes } = req.body;
+  
+  const sql = "UPDATE questions SET votes = ? WHERE id = ?";
+  db.run(sql, [votes, id], function(err) {
+    if (err) return res.status(500).json(err);
+    res.json({ success: true, votes });
+  });
+});
+
 
 
 
